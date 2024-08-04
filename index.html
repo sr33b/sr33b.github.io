@@ -8,6 +8,78 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
     <style>
+           :root {
+            --bg-primary: #f0f4f8;
+            --bg-secondary: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --accent-primary: #3182ce;
+            --accent-secondary: #63b3ed;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        
+        header {
+            background-color: #1a2634;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        section {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h1, h2, h3 {
+            color: var(--text-primary);
+        }
+        
+        p {
+            color: var(--text-secondary);
+        }
+        
+        a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            color: var(--accent-secondary);
+        }
+        
+        .project-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+         
         body {
             font-family: 'Roboto', sans-serif;
             line-height: 1.6;
