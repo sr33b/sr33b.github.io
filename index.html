@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Data Science Portfolio</title>
+    <title>My Education Data Science Portfolio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
@@ -114,22 +114,100 @@
                 margin: 5px 0;
             }
         }
+
+         header {
+            background-color: #1a2634;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+        }
+        
+        .animated-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .tagline {
+            font-size: 1.2em;
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 1s;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .node {
+            fill: #3498db;
+            transition: r 0.3s ease, fill 0.3s ease;
+        }
+        
+        .link {
+            stroke: #2980b9;
+            stroke-width: 1;
+            opacity: 0.6;
+        }
+        
+        .particle {
+            fill: #e74c3c;
+        }
+        
+        @keyframes pulse {
+            0% {
+                r: 4;
+                fill: #3498db;
+            }
+            50% {
+                r: 6;
+                fill: #e74c3c;
+            }
+            100% {
+                r: 4;
+                fill: #3498db;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>John Doe's Data Science Portfolio</h1>
-        <p>Exploring data, uncovering insights, building models</p>
+        <svg class="animated-background" width="100%" height="100%" viewBox="0 0 1000 400">
+            <defs>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <!-- SVG content will be dynamically generated -->
+        </svg>
+        <div class="header-content">
+            <h1>Data Science Portfolio</h1>
+            <p class="tagline">Exploring data, uncovering insights, building models</p>
+        </div>
     </header>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+   
     <main>
         <section id="home">
             <h2>Welcome to My Data Science Journey</h2>
@@ -264,6 +342,126 @@ print(processed_data.head())
                 }
             }
         });
+
+
+           // Animated background
+        const svg = document.querySelector('.animated-background');
+        const nodeCount = 20;
+        const linkProbability = 0.3;
+        const nodes = [];
+        const links = [];
+        const particles = [];
+
+        // Create nodes
+        for (let i = 0; i < nodeCount; i++) {
+            const node = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            node.setAttribute('class', 'node');
+            node.setAttribute('r', 4);
+            node.setAttribute('cx', Math.random() * 1000);
+            node.setAttribute('cy', Math.random() * 400);
+            node.setAttribute('filter', 'url(#glow)');
+            svg.appendChild(node);
+            nodes.push(node);
+        }
+
+        // Create links
+        for (let i = 0; i < nodeCount; i++) {
+            for (let j = i + 1; j < nodeCount; j++) {
+                if (Math.random() < linkProbability) {
+                    const link = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    link.setAttribute('class', 'link');
+                    link.setAttribute('x1', nodes[i].getAttribute('cx'));
+                    link.setAttribute('y1', nodes[i].getAttribute('cy'));
+                    link.setAttribute('x2', nodes[j].getAttribute('cx'));
+                    link.setAttribute('y2', nodes[j].getAttribute('cy'));
+                    svg.appendChild(link);
+                    links.push(link);
+                }
+            }
+        }
+
+        // Create particles
+        function createParticle() {
+            const particle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            particle.setAttribute('class', 'particle');
+            particle.setAttribute('r', 2);
+            particle.setAttribute('filter', 'url(#glow)');
+            svg.appendChild(particle);
+            return particle;
+        }
+
+        // Animate nodes and particles
+        function animate() {
+            nodes.forEach(node => {
+                let cx = parseFloat(node.getAttribute('cx'));
+                let cy = parseFloat(node.getAttribute('cy'));
+                cx += (Math.random() - 0.5) * 2;
+                cy += (Math.random() - 0.5) * 2;
+                if (cx < 0) cx = 0;
+                if (cx > 1000) cx = 1000;
+                if (cy < 0) cy = 0;
+                if (cy > 400) cy = 400;
+                node.setAttribute('cx', cx);
+                node.setAttribute('cy', cy);
+            });
+
+            links.forEach(link => {
+                const node1 = nodes[parseInt(link.getAttribute('data-from'))];
+                const node2 = nodes[parseInt(link.getAttribute('data-to'))];
+                link.setAttribute('x1', node1.getAttribute('cx'));
+                link.setAttribute('y1', node1.getAttribute('cy'));
+                link.setAttribute('x2', node2.getAttribute('cx'));
+                link.setAttribute('y2', node2.getAttribute('cy'));
+            });
+
+            particles.forEach((particle, index) => {
+                const progress = parseFloat(particle.getAttribute('data-progress')) + 0.01;
+                if (progress >= 1) {
+                    svg.removeChild(particle);
+                    particles.splice(index, 1);
+                } else {
+                    const fromNode = nodes[parseInt(particle.getAttribute('data-from'))];
+                    const toNode = nodes[parseInt(particle.getAttribute('data-to'))];
+                    const x1 = parseFloat(fromNode.getAttribute('cx'));
+                    const y1 = parseFloat(fromNode.getAttribute('cy'));
+                    const x2 = parseFloat(toNode.getAttribute('cx'));
+                    const y2 = parseFloat(toNode.getAttribute('cy'));
+                    const x = x1 + (x2 - x1) * progress;
+                    const y = y1 + (y2 - y1) * progress;
+                    particle.setAttribute('cx', x);
+                    particle.setAttribute('cy', y);
+                    particle.setAttribute('data-progress', progress);
+                }
+            });
+
+            if (Math.random() < 0.1) {
+                const fromNode = Math.floor(Math.random() * nodeCount);
+                const toNode = Math.floor(Math.random() * nodeCount);
+                if (fromNode !== toNode) {
+                    const particle = createParticle();
+                    particle.setAttribute('cx', nodes[fromNode].getAttribute('cx'));
+                    particle.setAttribute('cy', nodes[fromNode].getAttribute('cy'));
+                    particle.setAttribute('data-from', fromNode);
+                    particle.setAttribute('data-to', toNode);
+                    particle.setAttribute('data-progress', 0);
+                    particles.push(particle);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Highlight random nodes
+        setInterval(() => {
+            nodes.forEach(node => node.style.animation = '');
+            const highlightCount = 3;
+            for (let i = 0; i < highlightCount; i++) {
+                const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+                randomNode.style.animation = 'pulse 2s infinite';
+            }
+        }, 3000);
     </script>
 </body>
 </html>
